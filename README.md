@@ -1,5 +1,12 @@
 # Atividade AWS docker
 
+Trabalho para fixar conhecimentos de Docker. Realizado no programa de bolsas da Compass UOL.
+
+Grupo: 
+- [Alex](github.com/alexlsilva7)
+- [Antonio]()
+- [Erik]()
+
 ## Requisitos
 
 - Instalação e configuração do DOCKER ou CONTAINERD no host EC2;
