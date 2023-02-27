@@ -15,3 +15,10 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo mkdir -p /mnt/nfs
 sudo echo "IP_OU_DNS_DO_NFS:/ /mnt/nfs nfs defaults 0 0" >> /etc/fstab
 sudo mount -a
+
+# Executando o docker-compose do repositorio
+sudo yum install git -y
+sudo cd /home/ec2-user
+sudo git clone https://github.com/alexlsilva7/atividade_aws_docker.git
+sudo cd /home/ec2-user/atividade_aws_docker
+sudo docker-compose up -d
