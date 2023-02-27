@@ -27,3 +27,30 @@ Grupo:
 - Aplicação Wordpress precisa estar rodando na porta 80 ou 8080;
 - Utilizar repositório git para versionamento;
 - Criar documentação
+
+## Execução do projeto
+
+### Configuração da instância
+- AM2 Linux 2
+    - t3.small
+    - 16GB GP2
+- Portas Liberadas
+    - 80 ou 8080
+
+### Instalação do Docker
+
+```bash
+sudo yum update -y
+sudo yum install docker
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -a -G docker ec2-user
+```
+
+### Instalação do Docker Compose
+
+```bash
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
