@@ -1,24 +1,22 @@
 #!/bin/bash
 
 # Instalação e configuração do Docker
-sudo yum update -y
-sudo yum install docker -y
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo usermod -a -G docker ec2-user
+yum update -y
+yum install docker -y
+systemctl start docker
+systemctl enable docker
+usermod -a -G docker ec2-user
 
 # Instalação do docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
 
 # Montagem do efs
-sudo mkdir -p /mnt/nfs
-sudo echo "IP_OU_DNS_DO_NFS:/ /mnt/nfs nfs defaults 0 0" >> /etc/fstab
-sudo mount -a
+mkdir -p /mnt/nfs
+echo "172.31.72.139:/ /mnt/nfs nfs defaults 0 0" >> /etc/fstab
+mount -a
 
 # Executando o docker-compose do repositorio
-sudo yum install git -y
-sudo cd /home/ec2-user
-sudo git clone https://github.com/alexlsilva7/atividade_aws_docker.git
-sudo cd /home/ec2-user/atividade_aws_docker
-sudo docker-compose up -d
+yum install git -y
+git clone https://github.com/alexlsilva7/atividade_aws_docker.git /home/ec2-user/atividade_aws_docker
+docker-compose -f /home/ec2-user/atividade_aws_docker/docker-compose.yml up -d
