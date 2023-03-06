@@ -144,3 +144,15 @@ Além disso, devemos também permitir o tráfego a internet para cada sub-rede, 
 
 Após esses passos, finalizamos as configurações necessárias para o serviço de VPC.
 
+## Pares de chaves
+
+Inicie navegando para o console da EC2 no link https://us-east-1.console.aws.amazon.com/ec2/home
+
+Antes da execução das instâncias, devemos iniciar com a criação dos par de chaves. Então, navegue para seção de pares de chaves.
+
+- Criação do par de chaves
+    - `Nome: ec2key`
+    - `Tipo: RSA`
+    - `Formato: .pem`
+
+Seguindo com a execução das instâncias, iremos continuar com a execução do Bastion Host.
