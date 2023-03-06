@@ -156,3 +156,14 @@ Antes da execução das instâncias, devemos iniciar com a criação dos par de 
     - `Formato: .pem`
 
 Seguindo com a execução das instâncias, iremos continuar com a execução do Bastion Host.
+
+## Executando Bastion Host
+Inicie navegando para o console da EC2 no link https://us-east-1.console.aws.amazon.com/ec2/home e selecione `executar instância`.
+### Configuração da instância
+- `AMI: Linux 2`
+- `VPC: default`
+- `Sub-rede:  aws-controltower-PrivateSubnet1A`
+- `Tipo da instância: t2.micro`
+- `par de chaves: ec2key`
+- `EBS: 16GB GP2`
+- `Auto-associamento de IP público: habilitado`
