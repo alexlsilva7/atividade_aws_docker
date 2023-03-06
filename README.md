@@ -178,3 +178,68 @@ yum update -y
 echo "Port 22222" >> /etc/ssh/sshd_config
 systemctl restart sshd.service
 ```
+
+## Executando instância da aplicação
+Inicie navegando para o console da EC2 no link https://us-east-1.console.aws.amazon.com/ec2/home e selecione `executar instância`.
+
+### Configuração da instância
+- `AMI: Linux 2`
+- `VPC: default`
+- `Sub-rede:  private-wordpress`
+- `Tipo da instância: t3.small`
+- `par de chaves: keySSHAntonio`
+- `EBS: 16GB GP2`
+- `Auto-associamento de IP público: desabilitado`
+
+# Instalação Docker na instância
+
+Para instalar o docker na instância iremos executar os seguintes comandos:
+
+```bash
+#atualizar os pacotes para a última versão
+sudo yum update -y
+#instalar o docker
+sudo yum install docker
+#iniciar o serviço do docker
+sudo systemctl start docker
+#habilitar o serviço do docker para iniciar automaticamente
+sudo systemctl enable docker
+#adicionar o usuário ec2-user ao grupo docker
+sudo usermod -a -G docker ec2-user
+```
+
+# Instalação do Docker Compose
+Para instalar o docker compose na instância iremos executar os seguintes comando:
+
+```bash
+# baixar o docker-compose para a pasta /usr/local/bin
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# dar permissão de execução ao binário do docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+# Montagem do EFS
+
+Para acessar o EFS configurado podemos executar os seguinte comandos:
+
+```bash
+# criar o diretório para o EFS
+mkdir -p /mnt/nfs
+# adicionar o EFS no fstab
+echo "IP_OU_DNS_DO_NFS:/ /mnt/nfs nfs defaults 0 0" >> /etc/fstab
+# montar o EFS
+mount -a
+```
+
+# Executando contêineres via Docker Compose
+
+Para subir os contêineres que estarão responsáveis pela aplicação do Wordpress, iremos utilizar a execução de um [docker-compose.yml](/docker-compose.yml) que está disponibilizado nesse repositório. Então o primeiro passo é clonar esse arquivo para dentro da instância, iremos fazer isso usando os seguintes comandos:
+
+```bash
+sudo yum install git -y
+git clone https://github.com/alexlsilva7/atividade_aws_docker.git /home/ec2-user/atividade_aws_docker
+```
+Após isso podemos subir os contêineres utilizando o seguinte comando:
+```bash 
+docker-compose -f /home/ec2-user/atividade_aws_docker/docker-compose.yml up -d
+```
