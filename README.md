@@ -167,3 +167,14 @@ Inicie navegando para o console da EC2 no link https://us-east-1.console.aws.ama
 - `par de chaves: ec2key`
 - `EBS: 16GB GP2`
 - `Auto-associamento de IP público: habilitado`
+
+## Configurando porta SSH no Bastion
+Antes da execução da instância do bastion, devemos executar um script no user data do Bastion host, que irá modificar a porta de acesso ao SSH. Veja abaixo:
+
+```bash
+#!/bin/bash
+yum update -y
+# Configuração da porta SSH
+echo "Port 22222" >> /etc/ssh/sshd_config
+systemctl restart sshd.service
+```
