@@ -243,3 +243,40 @@ Após isso podemos subir os contêineres utilizando o seguinte comando:
 ```bash 
 docker-compose -f /home/ec2-user/atividade_aws_docker/docker-compose.yml up -d
 ```
+
+# Configuração do balanceador de cargas
+
+Inicie navegando para o console da EC2 no link https://us-east-1.console.aws.amazon.com/ec2/home e acesse a seção do balanceador de carga.
+
+## Grupo de destino
+Vamos seguir com a criação do grupo de destino
+
+- Criação do grupo de destino
+    - `Tipo: instância`
+    - `Nome: wordpressTG`
+    - `VPC: default`
+    - `Protocolo: http`
+    - `Códigos de sucesso: 200,302`
+
+## Aplication Load Balancer
+Seguimos com a criação do ALB.
+
+- Criação do Aplication Load Balancer
+    - `Nome: wordpressALB`
+    - `Esquema: voltado pra internet`
+    - `Tipo de endereço IP: IPv4`
+    - `VPC: default`
+    - `Mapeamento:`
+        - `us-east-1a`
+        - `us-east-1b`
+    - `Grupo de segurança: wordpress`
+    - `Listeners:`
+        Protocolo | Porta | Ação padrão
+        ---       | ---   | ---
+        http      | 80    | wordpressTG
+
+## Associando instância da aplicação ao grupo destino
+Por fim, devemos associar a instância que tem a aplicação do wordpress ao grupo de destino.
+Então, navegue até o grupo criado e selecione-o, após isso selecione a ação de `Registrar destinos`.
+
+Em seguida, selecione a instância que detem a aplicação wordpress e clique `Incluir como pendente abaixo`. Então, clique `Registrar destinos pendentes`. Com isso finalizamos.
