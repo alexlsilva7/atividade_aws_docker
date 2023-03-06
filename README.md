@@ -280,3 +280,28 @@ Por fim, devemos associar a instância que tem a aplicação do wordpress ao gru
 Então, navegue até o grupo criado e selecione-o, após isso selecione a ação de `Registrar destinos`.
 
 Em seguida, selecione a instância que detem a aplicação wordpress e clique `Incluir como pendente abaixo`. Então, clique `Registrar destinos pendentes`. Com isso finalizamos.
+
+# Acessando instâncias criadas
+Como dito anteriormente, iremos acessar a instância da aplicação através do Bastion Host.
+
+## Acessando Bastion
+Vamos utilizar o ssh-agent para conseguirmos acessar a instância privada sem necessitar copiar a chave de acesso para dentro do bastion. Então, na sua máquina local execute o seguinte:
+
+```bash
+ssh-agent # Executando agente SSH
+ssh-add "NomeDaChave.pem" # Adicionando chave ao agente
+```
+Com isso podemos acessar a chave de acesso dentro do Bastion. Vamos acessar o bastion utilizando o seguinte comando:
+
+```bash
+ssh -A -i "NomeDaChave.pem" ec2-user@ip-bastion -p 22222 # Acessando instância e encaminhando chave para o bastion 
+```
+
+## Acessando aplicação
+Dado que estamos acessando o bastion, podemos acessa a instância da aplicação. Então, como já foi copiado a chave pelo agente ssh, podemos acessar a instância da aplicação pelo seguinte:
+
+```bash
+ssh ec2-user@ip-privado-wp # Acessando instância da aplicação utilizando IP privado
+```
+
+[Voltar para o início](#atividade-aws-docker)
